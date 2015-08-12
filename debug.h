@@ -1,19 +1,20 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#include <chrono>
-#include <deque>
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include <set>
-#include <utility>
-#include <vector>
-#include "structs.h"
-#include "utility.h"
+#include <deque>		// std::deque
+#include <iostream>		// std::cout
+#include <vector>		// std::vector,std::vector<bool>
+#include "structs.h"	// struct node
+#include "utility.h"	// exec(), fitness()
 
-void print(std::deque<bool> & input,const std::vector< std::vector<bool> > & output,const std::vector<node *> & root);
-void printData(std::deque<bool> & input,const std::vector< std::vector<bool> > & output,const std::vector<node *> & root,std::vector<bool> & perfect);
+void print(	std::deque<bool> & input,
+			const std::vector< std::vector<bool> > & output,
+			const std::vector<node *> & root);
+void printData(	std::deque<bool> & input,
+				const std::vector< std::vector<bool> > & output,
+				const std::vector<node *> & root,
+				const std::set<weighted_pointer> & gate,
+				std::vector<bool> & perfect);
 void printRoots(const node *root);
 
 #endif
