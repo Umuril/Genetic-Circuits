@@ -2,7 +2,9 @@
 #define STRUCTS_H
 
 #include <memory>	// std::shared_ptr
+#include <set>		// std::set
 #include <tuple>	// std::tie
+#include <vector>	// std::vector
 
 struct node {
 	unsigned int oper : 3;
@@ -21,6 +23,11 @@ struct weighted_pointer {
 	bool operator < (const weighted_pointer & rhs) const {
 		return pointer < rhs.pointer;
 	}
+};
+
+struct backup {
+	std::set<weighted_pointer> gate;
+	std::vector<node *> root;
 };
 
 #endif
