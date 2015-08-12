@@ -53,3 +53,20 @@ int fitness(const std::vector<node *> & root,std::deque<bool> & input,const std:
 	}
 	return solution - gate.size() + input.size();
 }
+
+void addWeight(node * cc,bool perfect,std::set<weighted_pointer> & gate){
+	//cout << "ADD WEIGHT" << endl;
+	if(cc == nullptr)
+		return;
+	std::set<weighted_pointer>::iterator it = std::find_if(gate.begin(),gate.end(),[&](const weighted_pointer & tmp){return tmp.pointer.get() == cc;});
+	if(it != gate.end()){
+		int & w = it->weight;
+		//if(perfect)
+			w++;
+		if(cc->oper > 0){
+			addWeight((node *)(cc->a),perfect,gate);
+			if(cc->oper != 4)
+				addWeight((node *)(cc->b),perfect,gate);
+		}
+	}
+}
