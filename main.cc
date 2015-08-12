@@ -5,6 +5,7 @@
 #include <vector>
 #include "debug.h"
 #include "utility.h"
+#include "mutation.h"
 #include "init.h"
 #include "structs.h"
 
