@@ -1,5 +1,8 @@
-#include <tuple>	// std::tie
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
 #include <memory>	// std::shared_ptr
+#include <tuple>	// std::tie
 
 struct node {
 	unsigned int oper : 3;
@@ -19,3 +22,5 @@ struct weighted_pointer {
 		return pointer < rhs.pointer;
 	}
 };
+
+#endif
