@@ -7,9 +7,9 @@
 int main(){
 	srand(time(NULL));
 	
-	vector<vector<bool>> output; 
-	if(!read_data_from_file(output))
-		return -1;
+	std::vector< std::vector<bool> > output; 
+	if(!read_output_from_file(output))
+		return 1;
 	
-	return 0;	
+	return 0;
 }
