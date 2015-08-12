@@ -1,13 +1,11 @@
 #include "debug.h"
 
 void printRoots(const node *root){
-	if(root == nullptr)
+	if(!root)
 		return;
-	if(root->oper == 0){
-		std::cout << root << ": " << root-> oper << " " << root->a << " " << root->b << '\n';
-		return;
-	}
 	std::cout << root << ": " << root-> oper << " " << root->a << " " << root->b << '\n';
+	if(root->oper == 0)
+		return;
 	printRoots((node *)root->a);
 	printRoots((node *)root->b);	
 }
