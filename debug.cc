@@ -26,8 +26,8 @@ void print(std::deque<bool> & input,const std::vector< std::vector<bool> > & out
 
 
 
-void printData(const std::deque<bool> & input,const std::vector< std::vector<bool> > & output,const std::vector<node *> & root,const std::set<weighted_pointer> & gate){
-	std::cout << "BEST FITNESS: " << fitness() << '\n';
+void printData(std::deque<bool> & input,const std::vector< std::vector<bool> > & output,const std::vector<node *> & root,const std::set<weighted_pointer> & gate,std::vector<bool> & perfect){
+	std::cout << "BEST FITNESS: " << fitness(root,input,output,gate,perfect) << '\n';
 	print(input,output,root);
 	for (auto it=input.rbegin(); it != input.rend(); ++it)
     	std::cout << " INPUT: " << &(*it);
