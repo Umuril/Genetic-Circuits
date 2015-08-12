@@ -1,18 +1,8 @@
 #include "debug.h"
 
-void printRoots(const node *root){
-	if(!root)
-		return;
-	std::cout << root << ": " << root-> oper << ' ' << root->a << ' ' << root->b << '\n';
-	if(root->oper == 0)
-		return;
-	printRoots((node *)root->a);
-	printRoots((node *)root->b);	
-}
-
-void print(	std::deque<bool> & input,
-			const std::vector< std::vector<bool> > & output,
-			const std::vector<node *> & root){
+void print(	std::deque<bool> &input,
+			const std::vector< std::vector<bool> > &output,
+			const std::vector<node *> &root){
 				
 	for(int i = 0; i < (1 << input.size()); i++){
 		for(size_t j = 0; j < input.size(); j++)
@@ -25,11 +15,11 @@ void print(	std::deque<bool> & input,
 	}
 }
 
-void printData(	std::deque<bool> & input,
-				const std::vector< std::vector<bool> > & output,
-				const std::vector<node *> & root,
-				const std::set<weighted_pointer> & gate,
-				std::vector<bool> & perfect){
+void printData(	std::deque<bool> &input,
+				const std::vector< std::vector<bool> > &output,
+				const std::vector<node *> &root,
+				const std::set<weighted_pointer> &gate,
+				std::vector<bool> &perfect){
 					
 	std::cout << "BEST FITNESS: " << fitness(root,input,output,gate,perfect) << '\n';
 	print(input,output,root);	
@@ -44,4 +34,14 @@ void printData(	std::deque<bool> & input,
 			
 	for (auto it=gate.begin(); it != gate.end(); ++it)
     	std::cout << "gate: " << it->pointer.get() << " w:" << it->weight << ' ' << it->pointer->oper << ' ' << it->pointer->a << ' ' << it->pointer->b << '\n';
+}
+
+void printRoots(const node *root){
+	if(!root)
+		return;
+	std::cout << root << ": " << root-> oper << ' ' << root->a << ' ' << root->b << '\n';
+	if(root->oper == 0)
+		return;
+	printRoots((node *)root->a);
+	printRoots((node *)root->b);	
 }
