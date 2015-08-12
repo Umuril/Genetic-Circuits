@@ -1,7 +1,7 @@
 #include <tuple>	// std::tie
 #include <memory>	// std::shared_ptr
 
-struct node	{
+struct node {
 	unsigned int oper : 3;
 	void *a;
 	void *b;
