@@ -3,6 +3,8 @@
 #include <iostream>
 #include <set>
 #include <vector>
+#include "debug.h"
+#include "utility.h"
 #include "init.h"
 #include "structs.h"
 
