@@ -12,7 +12,6 @@ void init(	std::deque<bool> &input,
 	
 	for(size_t i = 0; i < output.size(); i++)
 		root.push_back(tmp_pointer);
-	
 }
 
 bool read_output_from_file(	std::vector< std::vector<bool> > &output,
