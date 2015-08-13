@@ -1,6 +1,7 @@
 #ifndef MUTATION_H
 #define MUTATION_H
 
+#include <algorithm>	// std::find_if
 #include <deque>		// std::deque
 #include <set>			// std::set
 #include <vector>		// std::vector
