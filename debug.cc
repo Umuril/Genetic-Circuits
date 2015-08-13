@@ -9,7 +9,7 @@ void print(	std::deque<bool> &input,
 			input[j] = ((i >> j) & 1);
 		for(int j = input.size() - 1; j >= 0; j--)
 			std::cout << input[j];
-		for(int j = input.size() - 1; j >= 0; j--)
+		for(int j = output.size() - 1; j >= 0; j--)
 			std::cout << " I: " << exec(*(root[j])) << " O: " << output[j][i];
 		std::cout << '\n';
 	}
