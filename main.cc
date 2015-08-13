@@ -16,15 +16,14 @@ int main(){
 	if(!read_output_from_file(output,input_lenght))
 		return 1;
 	
-	std::vector<node *> root(output.size());
+	std::vector<node *> root;
 	std::deque<bool> input(input_lenght);
 	std::set<weighted_pointer> gate;
 	std::vector<bool> perfect(output.size());
 	
 	init(input,output,gate,root);
-
 	fitness(root,input,output,gate,perfect);
-	printData(input,output,root,perfect);
+	printData(input,output,root,gate,perfect);
 	int bestfitness = 0;
 	int newone = 0;
 	double media = 0;
@@ -38,10 +37,11 @@ int main(){
 		newone = fitness(root,input,output,gate,perfect);
 		//if(newone > 2000)
 		media = ((media*nums)+newone)/(nums+1);
-		if(nums < 100)
+		//if(nums < 100)
+		//	nums++;
+		printf("fitness: %7d media: %7.2f gate_size: %5d nums: %llu\r",newone,media,gate.size(),nums);
+		if(newone < bestfitness-1000){
 			nums++;
-		//printf("fitness: %7d media: %7.2f nums: %llu\r",newone,media,nums);
-		if(newone < bestfitness-100){
 			gate.clear();
 			gate.insert(bestsolution.gate.begin(),bestsolution.gate.end());
 			root.assign(bestsolution.root.begin(),bestsolution.root.end());
@@ -60,10 +60,10 @@ int main(){
 				std::cout << " " << perfect[i];
 			}
 			std::cout << "\n";
-			printData(input,output,root,perfect);
+			printData(input,output,root,gate,perfect);
 		}
 		//std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-	}while(bestfitness < 2650);
+	}while(bestfitness < 30000);
 	
 	return 0;
 }
