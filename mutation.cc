@@ -77,8 +77,8 @@ void tryRemove(	std::set<weighted_pointer> &gate,
 	}
 	
 	for(auto it = root.begin(); it != root.end(); ++it)
-    	if((*it) == tmp)
-    		*it = (node*)(tmp -> a);
+    	if((*it) == tmp_pointer)
+    		*it = (node*)(tmp_pointer -> a);
 	
 	gate.erase(at);
 }
