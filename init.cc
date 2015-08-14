@@ -5,17 +5,18 @@ void init(	std::deque<bool> &input,
 			std::set<weighted_pointer> &gate,
 			std::vector<node *> &root){
 				
-	for(size_t i = 0; i < input.size(); i++)
-		gate.insert(std::move(weighted_pointer{1,std::make_unique<node>(node{0,&input[i],nullptr})}));
+	for(auto &&item_input : input)
+		gate.insert(std::move(weighted_pointer{1,std::make_unique<node>(node{0,&item_input,nullptr})}));
 	
 	node *tmp_pointer = gate.begin()->pointer.get();
 	
-	for(size_t i = 0; i < output.size(); i++)
+	for(auto &&dummy : output)
 		root.push_back(tmp_pointer);
 }
 
 bool read_output_from_file(	std::vector< std::vector<bool> > &output,
 							size_t &input_lenght){
+								
 	const char *FILENAME = "data.txt";
 	std::ifstream ifile(FILENAME);
 	if(!ifile)
