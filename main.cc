@@ -26,30 +26,16 @@ int main(){
 	printData(input,output,root,gate,perfect);
 	int bestfitness = 0;
 	int newone = 0;
-	double media = 0;
-	unsigned long long int nums = 0;
 	backup bestsolution;
-	bestsolution.gate.insert(gate.begin(),gate.end());
-	bestsolution.root.assign(root.begin(),root.end());
+	bestsolution.create_backup(gate,root);
 	do{
 		randomize(gate,input,root);
-		for_each(gate.begin(),gate.end(),[](weighted_pointer const & w){w.weight = 0;});
 		newone = fitness(root,input,output,gate,perfect);
-		//if(newone > 2000)
-		media = ((media*nums)+newone)/(nums+1);
-		//if(nums < 100)
-		//	nums++;
-		printf("fitness: %7d media: %7.2f gate_size: %5d nums: %llu\r",newone,media,gate.size(),nums);
-		if(newone < bestfitness-1000){
-			nums++;
-			gate.clear();
-			gate.insert(bestsolution.gate.begin(),bestsolution.gate.end());
-			root.assign(bestsolution.root.begin(),bestsolution.root.end());
-		}
+		//printf("fitness: %7d media: %7.2f gate_size: %5d nums: %llu\r",newone,media,gate.size(),nums);
+		if(newone < bestfitness-1000)
+			bestsolution.restore_from_backup(gate,root);
 		if(newone > bestfitness){
-			bestsolution.gate.clear();
-			bestsolution.gate.insert(gate.begin(),gate.end());
-			bestsolution.root.assign(root.begin(),root.end());
+			bestsolution.create_backup(gate,root);
 			bestfitness = newone;
 		//}
 			system("cls");

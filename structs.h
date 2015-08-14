@@ -28,6 +28,19 @@ struct weighted_pointer {
 struct backup {
 	std::set<weighted_pointer> gate;
 	std::vector<node *> root;
+	
+	void create_backup(const std::set<weighted_pointer> & p_gate, const std::vector<node *> p_root){
+		gate.clear();
+		gate.insert(p_gate.begin(),p_gate.end());
+		root.asign(p_root.begin(),p_root.end());
+	}
+	
+	void restore_from_backup(std::set<weighted_pointer> & p_gate, std::vector<node *> p_root){
+		p_gate.clear();
+		p_gate.insert(gate.begin(),gate.end());
+		p_root.asign(root.begin(),root.end());
+	}
+	
 };
 
 #endif
