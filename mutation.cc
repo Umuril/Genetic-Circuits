@@ -2,16 +2,16 @@
 
 void changeRoots(	std::vector<node *> &root,
 					std::set<weighted_pointer> &gate){
-						
-	for(size_t i = 0; i < root.size(); i++){
-		auto it = std::find_if(gate.begin(),gate.end(),[&](const weighted_pointer & tmp){return tmp.pointer.get() == root[i];});
+	
+	for(auto &&item_root : root){
+		auto it = std::find_if(gate.begin(),gate.end(),[&](const weighted_pointer & tmp){return tmp.pointer.get() == item_root;});
 		if(it->weight == 0 && (rand() % 2)){
-			node * actualRoot = root[i];
+			node * actualRoot = item_root;
 			std::set<weighted_pointer>::iterator at;
 			do
 				at = next(gate.begin(),rand() % gate.size());
 			while(actualRoot == at->pointer.get());
-			root[i] = at->pointer.get();
+			item_root = at->pointer.get();
 		}
 	}
 }
@@ -48,7 +48,7 @@ void tryAdd(std::set<weighted_pointer> &gate){
 		advance(B,randomB);
 		addpointer.pointer = std::make_unique<node>(node{(unsigned int)random,A->pointer.get(),B->pointer.get()});
 	}
-	addpointer.weight = 1;
+	addpointer.weight = 0;
 	gate.emplace(std::move(addpointer));
 	return;
 }
@@ -63,22 +63,23 @@ void tryRemove(	std::set<weighted_pointer> &gate,
 	do
 		at = std::next(gate.begin(),rand() % gate.size());
 	while((at->pointer)->oper == 0);
+	
 	if(at->weight > 0)
 		return;
 	
 	node * tmp_pointer = at->pointer.get();
 	
-	for (auto it = gate.begin(); it != gate.end(); ++it){
-		if((node *)(it->pointer)->a == tmp_pointer)
-    		(it->pointer)->a = tmp_pointer -> a;
-    	if((it->pointer)->oper != 4)
-    		if((node *)(it->pointer)->b == tmp_pointer)
-    			(it->pointer)->b = tmp_pointer -> a;
+	for(auto &&item_gate : gate){
+		if((node *)(item_gate.pointer)->a == tmp_pointer)
+    		item_gate.pointer->a = tmp_pointer -> a;
+    	if((item_gate.pointer)->oper != 4)
+    		if((node *)(item_gate.pointer)->b == tmp_pointer)
+    			item_gate.pointer->b = tmp_pointer -> a;
 	}
 	
-	for(auto it = root.begin(); it != root.end(); ++it)
-    	if((*it) == tmp_pointer)
-    		*it = (node*)(tmp_pointer -> a);
+	for(auto &&item_root : root)
+    	if(item_root == tmp_pointer)
+    		item_root = (node*)(tmp_pointer -> a);
 	
 	gate.erase(at);
 }
