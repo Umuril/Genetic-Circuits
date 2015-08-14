@@ -54,9 +54,10 @@ int fitness(const std::vector<node *> &root,
 			const std::vector< std::vector<bool> > &output,
 			const std::set<weighted_pointer> & gate,
 			std::vector<bool> & perfect){
+				
 	int solution = 0;
-	for(size_t i = 0; i < root.size(); i++)
-		perfect[i] = true;
+	for_each(gate.begin(),gate.end(),[](weighted_pointer const & w){w.weight = 0;});
+	std::fill(perfect.begin(),perfect.end(),true);
 	for(int i = 0; i < (1 << input.size()); i++){
 		for(size_t j = 0; j < input.size(); j++)
 			input[j] = ((i >> j) & 1);
@@ -67,8 +68,8 @@ int fitness(const std::vector<node *> &root,
 				perfect[j] = false;
 		}	
 	}
-	for(size_t j = 0; j < perfect.size(); j++)
-		if(perfect[j])
+	for(auto &&item_perfect : perfect)
+		if(item_perfect)
 			solution += 100;
 	
 	return solution - gate.size() + input.size();
