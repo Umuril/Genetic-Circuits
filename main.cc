@@ -16,40 +16,31 @@ int main(){
 	if(!read_output_from_file(output,input_lenght))
 		return 1;
 	
-	std::vector<node *> root;
-	std::deque<bool> input(input_lenght);
-	std::set<weighted_pointer> gate;
-	std::vector<bool> perfect(output.size());
+	std::vector<std::thread> threads;
 	
-	init(input,output,gate,root);
-	fitness(root,input,output,gate,perfect);
-	printData(input,output,root,gate,perfect);
-	int bestfitness = 0;
-	int newone = 0;
-	backup bestsolution;
-	bestsolution.create_backup(gate,root);
+	unsigned int best_fitness = 0;
+	std::vector<size_t> root(output.size(),0);
+	std::vector<node> gate;
+	
+	for(int i = 0; i < input_lenght; i++)
+		gate.emplace_back(node{0,i,0});
+	
+	printData(gate,root,input_lenght,output);
+	unsigned int generation = 0;
 	do{
-		randomize(gate,input,root);
-		newone = fitness(root,input,output,gate,perfect);
-		//printf("fitness: %7d media: %7.2f gate_size: %5d nums: %llu\r",newone,media,gate.size(),nums);
-		if(newone < bestfitness-1000)
-			bestsolution.restore_from_backup(gate,root);
-		if(newone > bestfitness){
-			bestsolution.create_backup(gate,root);
-			bestfitness = newone;
-		//}
-			system("cls");
-			
-			for(unsigned int i = 0; i < root.size(); i++){
-				if(perfect[i])
-					addWeight(root[i],true,gate);
-				std::cout << " " << perfect[i];
-			}
-			std::cout << "\n";
-			printData(input,output,root,gate,perfect);
+		for(unsigned int i = 0; i < std::thread::hardware_concurrency(); i++)
+			threads.push_back(std::thread(thread_work,std::ref(gate),std::ref(root),std::ref(input_lenght),std::ref(output)));
+		for (auto& th : threads)
+			th.join();
+		threads.clear();
+		if(fitness(gate,root,input_lenght,output) > best_fitness){
+			best_fitness = fitness(gate,root,input_lenght,output);
+			//system("cls");
+			//printData(gate,root,input_lenght,output);
+			std::cout << "Generation: " << generation << " Best fitness: " << best_fitness << std::endl;
 		}
-		//std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-	}while(bestfitness < 30000);
+		generation++;
+	}while(best_fitness < output.size()*(1<<input_lenght)*100-50);
 	
 	return 0;
 }
