@@ -1,4 +1,6 @@
 #include "mutation.h"
+#include "debug.h"
+#include <iostream>
 
 void changeRoots(	std::vector<node *> &root,
 					std::set<weighted_pointer> &gate){
