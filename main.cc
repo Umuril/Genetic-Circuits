@@ -2,12 +2,16 @@
 #include <deque>
 #include <iostream>
 #include <set>
+#include <thread>
 #include <vector>
+#include "thread.h"
 #include "debug.h"
 #include "utility.h"
 #include "mutation.h"
 #include "init.h"
 #include "structs.h"
+
+using namespace std;
 
 int main(){
 	srand(time(NULL));
