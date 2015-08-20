@@ -9,16 +9,10 @@
 #include <set>
 #include <utility>
 #include <vector>
+#include <iostream>
 #include "structs.h"
 
-void addWeight(	node * node_pointer,
-				const bool & perfect,
-				const std::set<weighted_pointer> & gate);
-bool exec(node root);
-int fitness(const std::vector<node *> &root,
-			std::deque<bool> & input,
-			const std::vector< std::vector<bool> > &output,
-			const std::set<weighted_pointer> & gate,
-			std::vector<bool> & perfect);
+bool exec(node root,std::deque<bool> & input,std::vector<node> & gate);
+int fitness(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght,const std::vector< std::vector<bool> > &output);
 
 #endif
