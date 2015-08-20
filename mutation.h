@@ -7,14 +7,11 @@
 #include <vector>		// std::vector
 #include "structs.h"	// struct node, struct weighted_pointer
 
-void changeRoots(	std::vector<node *> &root,
-					std::set<weighted_pointer> &gate);
-void randomize(	std::set<weighted_pointer> &gate,
-				std::deque<bool> &input,
-				std::vector<node *> &root);
-void tryAdd(std::set<weighted_pointer> &gate);
-void tryRemove(	std::set<weighted_pointer> &gate,
-				std::deque<bool> &input,
-				std::vector<node *> &root);
+void changeRoots(std::vector<node> &gate, std::vector<size_t> &root);
+void randomize(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght);
+void tryAdd(std::vector<node> &gate, const size_t & input_lenght);
+void tryRemove(std::vector<node> &gate, std::vector<size_t> &root);
+void tryMutate(std::vector<node> &gate, const size_t &input_lenght);
+void tryAddFirst(std::vector<node> &gate, const size_t &input_lenght);
 
 #endif
