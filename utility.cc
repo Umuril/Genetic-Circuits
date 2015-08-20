@@ -1,22 +1,5 @@
 #include "utility.h"
 
-void addWeight(	node * node_pointer,
-				const bool & perfect,
-				const std::set<weighted_pointer> & gate){
-					
-	if(!node_pointer)
-		return;
-	std::set<weighted_pointer>::iterator it = std::find_if(gate.begin(),gate.end(),[&](const weighted_pointer & tmp){return tmp.pointer.get() == node_pointer;});
-	if(it != gate.end()){
-		++(it->weight);
-		if(node_pointer->oper != 0){
-			addWeight((node *)(node_pointer->a),perfect,gate);
-			if(node_pointer->oper != 4)
-				addWeight((node *)(node_pointer->b),perfect,gate);
-		}
-	}
-}
-
 bool exec(node root){
 	switch(root.oper){
 		case 0: // 000  NOTHING
