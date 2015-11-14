@@ -10,7 +10,7 @@
 void changeRoots(std::vector<node> &gate, std::vector<size_t> &root);
 void randomize(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght);
 void tryAdd(std::vector<node> &gate, const size_t & input_lenght);
-void tryRemove(std::vector<node> &gate, std::vector<size_t> &root);
+void tryRemove(std::vector<node> &gate, const size_t &input_lenght, std::vector<size_t> &root);
 void tryMutate(std::vector<node> &gate, const size_t &input_lenght);
 void tryAddFirst(std::vector<node> &gate, const size_t &input_lenght);
 
