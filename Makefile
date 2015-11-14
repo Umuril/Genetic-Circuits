@@ -8,15 +8,10 @@ EXECUTABLE=Genetic.out
 Genetic.out: $(OBJECTS)
 	g++ $(CXXFLAGS) -o Genetic.out $(OBJECTS)
 
--include dependencies
-
 .PHONY: build depend clean cleanall
-
-depend:
-	g++ -MM $(CXXFLAGS) $(SOURCES) > dependencies
 
 clean:
 	rm -f $(OBJECTS)
 
 cleanall:
-	rm -f $(EXECUTABLE) $(OBJECTS) dependencies
+	rm -f $(EXECUTABLE) $(OBJECTS)
