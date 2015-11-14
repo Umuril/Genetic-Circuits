@@ -29,3 +29,6 @@
 
 # Output
 *.txt
+
+# Dependencies
+dependencies

@@ -1,16 +1,22 @@
 CC=g++
-CFLAGS=-c -Wall -std=c++11 -pthread
-LDFLAGS= -std=c++11 -pthread
-SOURCES=main.cc init.cc debug.cc thread.cc utility.cc mutation.cc
-OBJECTS=$(SOURCES:.cpp=.o)
+CXXFLAGS=-std=c++11 -pthread
+LDFLAGS=-std=c++11 -pthread
+SOURCES=*.cc
+OBJECTS=init.o utility.o debug.o mutation.o thread.o main.o
 EXECUTABLE=Genetic.out
 
-all: $(SOURCES) $(EXECUTABLE)
-	
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+Genetic.out: $(OBJECTS)
+	g++ $(CXXFLAGS) -o Genetic.out $(OBJECTS)
 
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+-include dependencies
 
+.PHONY: build depend clean cleanall
 
+depend:
+	g++ -MM $(CXXFLAGS) $(SOURCES) > dependencies
+
+clean:
+	rm -f $(OBJECTS)
+
+cleanall:
+	rm -f $(EXECUTABLE) $(OBJECTS)
