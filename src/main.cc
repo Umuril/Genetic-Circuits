@@ -60,7 +60,7 @@ int main(){
 	std::vector<size_t> root(output.size(),0);
 	std::vector<node> gate;
 	
-	for(size_t	 i = 0; i < input_lenght; i++)
+	for(size_t i = 0; i < input_lenght; i++)
 		gate.emplace_back(node{0,i,0});
 	
 	printData(gate,root,input_lenght,output);
