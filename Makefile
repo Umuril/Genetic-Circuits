@@ -1,5 +1,5 @@
 CC=g++
-CXXFLAGS=-std=c++11 -pthread
+CXXFLAGS=-std=c++11 -pthread -Wall
 LDFLAGS=-std=c++11 -pthread
 SOURCES=*.cc
 OBJECTS=init.o utility.o debug.o mutation.o thread.o main.o

@@ -74,7 +74,7 @@ void tryRemove(std::vector<node> &gate, const size_t & input_lenght, std::vector
     //printGate(gate);
     //std::cout << "PT: " << pt;
 
-    for(int i = input_lenght; i < gate.size(); i++){
+    for(size_t i = input_lenght; i < gate.size(); i++){
         if(gate[i].a >= pt)
             gate[i].a--;
         if(gate[i].b >= pt)

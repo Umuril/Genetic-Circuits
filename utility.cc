@@ -53,9 +53,9 @@ bool exec(node root,std::deque<bool> & input,std::vector<node> & gate){
  * @param[in] output Output desired
  * @return Fitness value of actual circuit
  */
-int fitness(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght,const std::vector< std::vector<bool> > &output){
+unsigned int fitness(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght,const std::vector< std::vector<bool> > &output){
 	std::deque<bool> input(input_lenght);
-	int solution = 0;
+	unsigned int solution = 0;
 	
 	for(int i = 0; i < (1 << input.size()); i++){
 		for(size_t j = 0; j < input.size(); j++)
