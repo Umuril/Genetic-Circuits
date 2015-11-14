@@ -3,7 +3,7 @@ CFLAGS=-c -Wall -std=c++11 -pthread
 LDFLAGS= -std=c++11 -pthread
 SOURCES=main.cc init.cc debug.cc thread.cc utility.cc mutation.cc
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=exe
+EXECUTABLE=Genetic.out
 
 all: $(SOURCES) $(EXECUTABLE)
 	
