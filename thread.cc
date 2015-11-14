@@ -1,8 +1,20 @@
 #include "thread.h"
 #include <fstream>
 
-std::mutex mtx;
+/** @page thread
+ * This page contains the work for every thread.
+ *  
+*/
 
+std::mutex mtx; ///< Used each time i find a best solution in order to save them as best.
+
+/** Prints the actual output of the circuit and the desired one
+ *
+ * @param[out] best_gate Highest fitness circuit found
+ * @param[out] best_root The output gates from the highest fitness circuit found
+ * @param[in] input_lenght Number of inputs
+ * @param[in] output Output desired
+ */
 void thread_work(std::vector<node> &best_gate, std::vector<size_t> &best_root, size_t & input_lenght,std::vector< std::vector<bool> > & output){
 	
 	srand(time(NULL));

@@ -2,6 +2,16 @@
 #include "debug.h"
 #include <iostream>
 
+/** @page mutation
+ * This page contains all possible modifications to the circuit.
+ *  
+*/
+
+/** Changes all root values
+ *
+ * @param[in]	gate Circuit information
+ * @param[in,out] root Output gates
+ */
 void changeRoots(std::vector<node> &gate, std::vector<size_t> &root){
     for(auto &&item_root : root){
         size_t new_root;
@@ -12,6 +22,12 @@ void changeRoots(std::vector<node> &gate, std::vector<size_t> &root){
     }
 }
 
+/** Chooses what kind of modifications will be done
+ *
+ * @param[in] gate Circuit information
+ * @param[in] root Output gates
+ * @param[in] input_lenght Number of inputs
+ */
 void randomize(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght){
 
 	unsigned short int random;
@@ -26,19 +42,28 @@ void randomize(std::vector<node> &gate, std::vector<size_t> &root, const size_t 
 		//printGate(gate);
 		tryRemove(gate,input_lenght,root);
 	}
-	if(random <= 100)
-		changeRoots(gate,root);
+	changeRoots(gate,root);
 	return;
 }
 
+/** Adds one logic gate at the end of the circuit
+ *
+ * @param[in,out] gate Circuit information
+ * @param[in] input_lenght Number of inputs
+ */
 void tryAdd(std::vector<node> &gate, const size_t & input_lenght){
     int random = rand() % 7 + 1;
     int randomA = rand() % gate.size();
     int randomB = rand() % gate.size();
     gate.emplace_back(node{random,randomA,randomB});
-	return;
+    return;
 }
 
+/** Removes (if possible) one logic gate from the circuit
+ *
+ * @param[in,out] gate Circuit information
+ * @param[in] input_lenght Number of inputs
+ */
 void tryRemove(std::vector<node> &gate, const size_t & input_lenght, std::vector<size_t> &root){
 
 	if(gate.size() <= input_lenght)

@@ -1,5 +1,16 @@
 #include "init.h"
 
+/** @page init
+ * This page contains all the initialacion functions.
+ *  
+*/
+
+/** Prints the actual output of the circuit and the desired one
+ *
+ * @param[out] root Output gates
+ * @param[in] input_lenght Number of inputs
+ * @return Flag that returns if the file could be opened.
+ */
 bool read_output_from_file(	std::vector< std::vector<bool> > &output, size_t &input_lenght){
 								
 	const char *FILENAME = "data.txt";

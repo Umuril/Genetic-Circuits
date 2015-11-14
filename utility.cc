@@ -1,5 +1,17 @@
 #include "utility.h"
 
+/** @page utility
+ * This page contains all utility functions.
+ *  
+*/
+
+/** Executes recursively the output of a gate
+ *
+ * @param[in] root Gate from the output will be calculated from
+ * @param[in] input The input given to the circuit
+ * @param[in] gate The circuit informations
+ * @return The output after the execution
+ */
 bool exec(node root,std::deque<bool> & input,std::vector<node> & gate){
 	switch(root.oper){
 		case 0: // 000  NOTHING
@@ -32,6 +44,15 @@ bool exec(node root,std::deque<bool> & input,std::vector<node> & gate){
 	}
 }
 
+
+/** Fitness function
+ *
+ * @param[in] gate Circuit information
+ * @param[in] root Output gates
+ * @param[in] input_lenght Number of inputs
+ * @param[in] output Output desired
+ * @return Fitness value of actual circuit
+ */
 int fitness(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght,const std::vector< std::vector<bool> > &output){
 	std::deque<bool> input(input_lenght);
 	int solution = 0;
