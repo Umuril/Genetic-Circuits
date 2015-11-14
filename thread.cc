@@ -15,7 +15,7 @@ void thread_work(std::vector<node> &best_gate, std::vector<size_t> &best_root, s
 	std::ofstream ofile("gates.txt",std::ofstream::app);
 	
 	// SHOULD BE GLOBAL
-	int g_num_genes = 50;
+	int g_num_genes = 10;
 	
 	int new_fitness = 0;
 	int best_fitness = fitness(best_gate,best_root,input_lenght,output);
