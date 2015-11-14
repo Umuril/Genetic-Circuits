@@ -12,8 +12,6 @@ void thread_work(std::vector<node> &best_gate, std::vector<size_t> &best_root, s
 	gate.assign(best_gate.begin(),best_gate.end());
 	root.assign(best_root.begin(),best_root.end());
 	
-	std::ofstream ofile("gates.txt",std::ofstream::app);
-	
 	// SHOULD BE GLOBAL
 	int g_num_genes = 10;
 	
