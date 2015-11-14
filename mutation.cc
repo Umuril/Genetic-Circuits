@@ -52,9 +52,9 @@ void randomize(std::vector<node> &gate, std::vector<size_t> &root, const size_t 
  * @param[in] input_lenght Number of inputs
  */
 void tryAdd(std::vector<node> &gate, const size_t & input_lenght){
-    int random = rand() % 7 + 1;
-    int randomA = rand() % gate.size();
-    int randomB = rand() % gate.size();
+    unsigned int random = rand() % 7 + 1;
+    size_t randomA = rand() % gate.size();
+    size_t randomB = rand() % gate.size();
     gate.emplace_back(node{random,randomA,randomB});
     return;
 }
