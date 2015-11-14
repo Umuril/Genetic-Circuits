@@ -39,8 +39,8 @@ int main(){
 		threads.clear();
 		if(fitness(gate,root,input_lenght,output) > best_fitness){
 			best_fitness = fitness(gate,root,input_lenght,output);
-			//system("cls");
-			//printData(gate,root,input_lenght,output);
+			system("clear");
+			printData(gate,root,input_lenght,output);
 			std::cout << "Generation: " << generation << " Best fitness: " << best_fitness << std::endl;
 		}
 		generation++;
