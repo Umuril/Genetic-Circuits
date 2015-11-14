@@ -31,5 +31,4 @@ void thread_work(std::vector<node> &best_gate, std::vector<size_t> &best_root, s
 			
 		}
 	}
-	ofile.close();
 }
