@@ -23,12 +23,14 @@ bool read_output_from_file(	std::vector< std::vector<bool> > &output, size_t &in
 	output.resize(output_lenght,std::vector<bool>(1<<input_lenght));
 	char c;
 	ifile.get(c);
+	ifile.get(c);
 	for(int i = 0; i < output_lenght; i++){
 	
 		for(int j = 0; j < (1<<input_lenght); j++){
 			ifile.get(c);
 			output[i][j] = (c=='1')?true:false;
 		}
+		ifile.get(c);
 		ifile.get(c);
 	}
 	return true;		
