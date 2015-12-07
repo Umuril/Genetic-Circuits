@@ -106,7 +106,7 @@ gboolean draw(GtkWidget *widget, cairo_t *cr, gpointer user_data){
 	
 	DataRef * dataref = (DataRef *)user_data;
 	
-	std::vector<int> levels(dataref->gate.size(),0);
+	std::vector<unsigned int> levels(dataref->gate.size(),0);
 	for(size_t i = dataref->input_lenght; i < levels.size(); i++){
 		levels[i] = std::max(	levels[dataref->gate[i].a],levels[dataref->gate[i].b])+1;
 	}
@@ -127,7 +127,7 @@ gboolean draw(GtkWidget *widget, cairo_t *cr, gpointer user_data){
 		drawGate(cr,dataref->gate[i].oper,posX[i],posY[i]);
 	}
 	
-	int maxh;
+	unsigned int maxh;
 	//std::cout << "LOOOOOP!" << std::endl;
 	for(size_t i = dataref->input_lenght; i < levels.size(); i++){
 		maxh = 0;
@@ -200,11 +200,12 @@ int main(int argc, char *argv[]){
     darea = gtk_drawing_area_new();
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_add(GTK_CONTAINER(window), darea);
-
-
+DataRef * dataref = new DataRef;
+	g_signal_connect(darea, "draw", G_CALLBACK(draw), dataref); 
+	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
       
 	
-	DataRef * dataref = new DataRef;
+	
 	
 	srand(time(NULL));
 	//size_t input_lenght; ///< we just need the lenght of the deque in order to generate it every time.
@@ -222,36 +223,39 @@ int main(int argc, char *argv[]){
 	
 	for(size_t i = 0; i < dataref->input_lenght; i++)
 		dataref->gate.emplace_back(node{0,i,0});
-	
-	printData(dataref->gate,dataref->root,dataref->input_lenght,output);
+	for(size_t i = 0; i < 80; i++)
+		tryAdd(dataref->gate,dataref->input_lenght);
+		//dataref->gate.emplace_back(node{1,0,0});
+	//printData(dataref->gate,dataref->root,dataref->input_lenght,output);
 	unsigned int generation = 0;
-	
+	/*
 	dataref->gate.emplace_back(node{1,0,1});
 	dataref->gate.emplace_back(node{2,1,2});	
 	dataref->gate.emplace_back(node{3,3,4});
-	dataref->gate.emplace_back(node{7,3,5});	
-	
-	for(unsigned int i = 0; i < 100; i++){
-		for(unsigned int i = 0; i < std::thread::hardware_concurrency(); i++)
-			threads.push_back(std::thread(thread_work,std::ref(dataref->gate),std::ref(dataref->root),std::ref(dataref->input_lenght),std::ref(output)));
-		for (auto& th : threads)
-			th.join();
-		threads.clear();
+	dataref->gate.emplace_back(node{7,3,5});
+*/
+	do{
+		thread_work(dataref->gate,dataref->root,dataref->input_lenght,output);
+		//if(generation % 1000 == 0)
+			//std::cout << "Generation: " << generation << " Best fitness: " << best_fitness/100+1 << std::endl;
 		if(fitness(dataref->gate,dataref->root,dataref->input_lenght,output) > best_fitness){
 			best_fitness = fitness(dataref->gate,dataref->root,dataref->input_lenght,output);
 			system("clear");
 			printData(dataref->gate,dataref->root,dataref->input_lenght,output);
 			std::cout << "Generation: " << generation << " Best fitness: " << best_fitness << std::endl;
+			//printGate(dataref->gate);
+			//gtk_widget_queue_draw(darea);
 		}
+		//printGate(dataref->gate);
 		generation++;
-	}
+
+	}while(generation < 500000 && best_fitness < output.size()*(1<<dataref->input_lenght)*100-100);
 	
 	
 	
 	
 	
-	g_signal_connect(darea, "draw", G_CALLBACK(draw), dataref); 
-	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+	
 	
 	gtk_widget_queue_draw(darea);
 	
