@@ -7,4 +7,13 @@ struct node {
 	size_t b;
 };
 
+struct DataRef {
+	std::vector<node> gate;
+	std::vector<size_t> root;
+	size_t input_lenght;
+	std::vector< std::vector<bool> > output;
+	unsigned int best_fitness;
+	unsigned int generation;
+};
+
 #endif

@@ -30,23 +30,23 @@ void changeRoots(std::vector<node> &gate, std::vector<size_t> &root){
  */
 void randomize(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght,std::vector< std::vector<bool> > & output){
 
-	//unsigned short int random;
-	//random = rand() % 100;
+	unsigned short int random;
+	random = rand() % 100;
 	
 	if(fitness(gate,root,input_lenght,output) > output.size()*(1<<input_lenght)*100-100)
 		tryRemove(gate,input_lenght,root);
 	
 	tryModify(gate,input_lenght,root);
 	//if(random <= 50){
-	//if(gate.size() < 80){
+	if(gate.size() < 40 && random <= 50){
         //std::cout << "ADD: ";
 		//printGate(gate);
-		//tryAdd(gate,input_lenght);
-	//}else{
+		tryAdd(gate,input_lenght);
+	}/*else{
         //std::cout << "REMOVE: ";
 		//printGate(gate);
-		//tryRemove(gate,input_lenght,root);
-	//}
+		tryRemove(gate,input_lenght,root);
+	}*/
 	//changeRoots(gate,root);
 	return;
 }
