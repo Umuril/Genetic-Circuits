@@ -11,9 +11,8 @@
  * @param[in] input_lenght Number of inputs
  * @return Flag that returns if the file could be opened.
  */
-bool read_output_from_file(	std::vector< std::vector<bool> > &output, size_t &input_lenght){
+bool read_output_from_file(	const char *FILENAME,std::vector< std::vector<bool> > &output, size_t &input_lenght){
 								
-	const char *FILENAME = "data.txt";
 	std::ifstream ifile(FILENAME);
 	if(!ifile)
 		return false;

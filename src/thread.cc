@@ -6,8 +6,6 @@
  *  
 */
 
-std::mutex mtx; ///< Used each time i find a best solution in order to save them as best.
-
 /** Prints the actual output of the circuit and the desired one
  *
  * @param[out] best_gate Highest fitness circuit found
@@ -17,7 +15,6 @@ std::mutex mtx; ///< Used each time i find a best solution in order to save them
  */
 void thread_work(std::vector<node> &best_gate, std::vector<size_t> &best_root, size_t & input_lenght,std::vector< std::vector<bool> > & output){
 	
-	srand(time(NULL));
 	std::vector<node> gate;
 	std::vector<size_t> root;
 	
@@ -31,16 +28,12 @@ void thread_work(std::vector<node> &best_gate, std::vector<size_t> &best_root, s
 	int best_fitness = fitness(best_gate,best_root,input_lenght,output);
 	
 	for(int i = 0; i < g_num_genes; i++){
-		
-		randomize(gate,root,input_lenght);
+		randomize(gate,root,input_lenght,output);
 		new_fitness = fitness(gate,root,input_lenght,output);
-		if(new_fitness > best_fitness){
-			mtx.lock();
-			
+		if(new_fitness >= best_fitness){
 			best_gate.assign(gate.begin(),gate.end());
 			best_root.assign(root.begin(),root.end());
-			mtx.unlock();
-			
+			return;
 		}
 	}
 }

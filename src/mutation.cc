@@ -28,21 +28,26 @@ void changeRoots(std::vector<node> &gate, std::vector<size_t> &root){
  * @param[in] root Output gates
  * @param[in] input_lenght Number of inputs
  */
-void randomize(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght){
+void randomize(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght,std::vector< std::vector<bool> > & output){
 
 	unsigned short int random;
 	random = rand() % 100;
-
-	if(random <= 75){
+	
+	if(fitness(gate,root,input_lenght,output) > output.size()*(1<<input_lenght)*100-100)
+		tryRemove(gate,input_lenght,root);
+	
+	tryModify(gate,input_lenght,root);
+	//if(random <= 50){
+	if(gate.size() < 40 && random <= 50){
         //std::cout << "ADD: ";
 		//printGate(gate);
 		tryAdd(gate,input_lenght);
-	}else{
+	}/*else{
         //std::cout << "REMOVE: ";
 		//printGate(gate);
 		tryRemove(gate,input_lenght,root);
-	}
-	changeRoots(gate,root);
+	}*/
+	//changeRoots(gate,root);
 	return;
 }
 
@@ -80,11 +85,47 @@ void tryRemove(std::vector<node> &gate, const size_t & input_lenght, std::vector
         if(gate[i].b >= pt)
             gate[i].b--;
     }
-
-
+	
+	for(size_t i = 0; i < root.size(); i++){
+		if(root[i] >= pt)
+            root[i]--;
+	}
     gate.erase(gate.begin()+pt);
 
     //std::cout << " - AFTER    ";
     //printGate(gate);
 }
 
+void tryModify(std::vector<node> &gate, const size_t & input_lenght, std::vector<size_t> &root){
+	
+	if(gate.size() <= input_lenght){
+		return;
+	}
+
+    size_t pt = (rand() % (gate.size()+root.size()-input_lenght))+input_lenght;
+	
+	if(pt >= gate.size()){
+		unsigned int random = pt - gate.size();
+    	size_t new_root = rand() % root.size();
+	    do
+	        new_root = rand() % gate.size();
+	    while(root[random] == new_root);
+	    root[random] = new_root;
+	    return;
+	} else {
+		//std::cout << "ESCI" << pt << std::endl;
+		unsigned int random = rand() % 3; 
+		switch(random){
+			case 0:
+				gate[pt].oper = rand() % 7 + 1;
+				//std::cout << "SCI: " << gate[pt].oper << std::endl;
+				break;
+			case 1:
+				gate[pt].a = rand() % pt;
+				break;
+			case 2:
+				gate[pt].b = rand() % pt;
+				break;
+    	}
+    }
+}
