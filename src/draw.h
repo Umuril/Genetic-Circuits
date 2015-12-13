@@ -7,8 +7,12 @@
 #include <algorithm>
 #include "structs.h"
 
-void drawGate(cairo_t *cr, int gate, double x, double y);
-void connectGate(cairo_t *cr, double x1, double y1, double x2, double y2,bool first, double sizex1, double sizex2, double maxh);
 gboolean draw(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+void drawGate(cairo_t *cr, const int gate, const double x,
+					const double y);
+void connectGate(cairo_t *cr, const double x1, const double y1,
+					const double x2, const double y2, const bool first,
+					const double sizex1, const double sizex2,
+					const double maxh);
 
 #endif

@@ -7,7 +7,7 @@ struct node {
 	size_t b;
 };
 
-struct DataRef {
+struct Params {
 	std::vector<node> gate;
 	std::vector<size_t> root;
 	size_t input_lenght;

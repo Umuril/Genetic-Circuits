@@ -1,11 +1,24 @@
 #include "draw.h"
+#include <assert.h>
+/** @page draw
+ * This page contains all drawing functions.
+ *  
+*/
 
-gboolean draw(GtkWidget *widget, cairo_t *cr, gpointer user_data){
+/** Main drawing function of the drawing area
+ *
+ * @param[out] widget widget that called the draw fuction
+ * @param[out] cr cairo to draw to
+ * @param[in] user_data pointer pointer to all data needed by function
+ * @return whether the signal emission should be aborted
+ */
+gboolean draw(GtkWidget * widget, cairo_t * cr, gpointer user_data){
+	assert( user_data != NULL);
 	cairo_scale(cr,1,1);
 	cairo_set_source_rgb(cr, 0, 0, 0);
 	cairo_set_line_width(cr, 0.5);
 	
-	DataRef * dataref = (DataRef *)user_data;
+	Params * dataref = (Params *)user_data;
 	if(dataref->input_lenght == 0)
 		return TRUE;
 	
@@ -61,18 +74,19 @@ gboolean draw(GtkWidget *widget, cairo_t *cr, gpointer user_data){
 	}
 	
 	cairo_stroke(cr);
-	/*maxh=0;
-	for(size_t i = 0; i < reordered_gate; i++){
-		if(maxh < reordered_gate[i].size())
-			maxh = reordered_gate[i].size();
-	}
-	cairo_scale(cr,10+reordered_gate.size()*90+10,10+40*maxh+10);*/
-	
 	gtk_widget_queue_draw(widget);
 	return TRUE;
 }
 
-void drawGate(cairo_t *cr, int gate, double x, double y){
+/** Function that draws one logic gate
+ *
+ * @param[out] cr cairo to draw to
+ * @param[in] gate type of logic gate to draw
+ * @param[in] x coordinate x where to start to draw the gate
+ * @param[in] y coordinate y where to start to draw the gate
+ */
+void drawGate(cairo_t *cr, const int gate, const double x,
+					const double y){
 	if(gate < 0 || gate > 7)
 		return;
 	if((gate >> 1) % 2){
@@ -126,7 +140,22 @@ void drawGate(cairo_t *cr, int gate, double x, double y){
 	return;
 }
 
-void connectGate(cairo_t *cr, double x1, double y1, double x2, double y2,bool first, double sizex1, double sizex2, double maxh){
+/** Function that connects two logic gates
+ *
+ * @param[out] cr cairo to draw to
+ * @param[in] x1 coordinate x of the output logic gate
+ * @param[in] y1 coordinate y of the output logic gate
+ * @param[in] x2 coordinate x of the input logic gate
+ * @param[in] y2 coordinate y of the input logic gate
+ * @param[in] first true if it's the first input of the gate
+ * @param[in] sizex1 number of gates in the same line of output gate
+ * @param[in] sizex2 number of gates in the same line of input gate
+ * @param[in] maxh max number of gates between input and output gate
+ */
+void connectGate(cairo_t *cr, const double x1, const double y1,
+					const double x2, const double y2, const bool first,
+					const double sizex1, const double sizex2,
+					const double maxh){
 	if(x2 <= x1)
 		return;
 	int xdist = (x2 - x1) / 90;

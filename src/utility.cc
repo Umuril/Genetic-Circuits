@@ -5,6 +5,37 @@
  *  
 */
 
+/** Loads output matrix from file
+ *
+ * @param[in] filename path of file
+ * @param[out] output Output desired
+ * @param[in] input_lenght Number of inputs
+ * @return Flag that returns if the file could be opened.
+ */
+bool read_output_from_file(const char * filename,
+		std::vector< std::vector<bool> > &output, size_t &input_lenght){
+	std::ifstream ifile(filename);
+	if(!ifile)
+		return false;
+	int output_lenght;
+	ifile >> input_lenght;
+	ifile >> output_lenght;
+	output.resize(output_lenght,std::vector<bool>(1<<input_lenght));
+	char c;
+	ifile.get(c);
+	ifile.get(c);
+	for(int i = 0; i < output_lenght; i++){
+
+		for(int j = 0; j < (1<<input_lenght); j++){
+			ifile.get(c);
+			output[i][j] = (c=='1')?true:false;
+		}
+		ifile.get(c);
+		ifile.get(c);
+	}
+	return true;
+}
+
 /** Executes recursively the output of a gate
  *
  * @param[in] root Gate from the output will be calculated from
@@ -12,7 +43,7 @@
  * @param[in] gate The circuit informations
  * @return The output after the execution
  */
-bool exec(node root,std::deque<bool> & input,std::vector<node> & gate){
+bool exec(const node root, const std::deque<bool> & input, const std::vector<node> & gate){
 	switch(root.oper){
 		case 0: // 000  NOTHING
 			return input[root.a];
@@ -53,7 +84,8 @@ bool exec(node root,std::deque<bool> & input,std::vector<node> & gate){
  * @param[in] output Output desired
  * @return Fitness value of actual circuit
  */
-unsigned int fitness(std::vector<node> &gate, std::vector<size_t> &root, const size_t &input_lenght,const std::vector< std::vector<bool> > &output){
+unsigned int fitness(const std::vector<node> &gate, const std::vector<size_t> &root,
+		const size_t &input_lenght,const std::vector< std::vector<bool> > &output){
 	std::deque<bool> input(input_lenght);
 	unsigned int solution = 0;
 	
