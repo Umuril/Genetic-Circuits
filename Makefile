@@ -15,3 +15,6 @@ clean:
 
 cleanall:
 	rm -f $(EXECUTABLE) $(OBJECTS)
+
+compress:
+	tar -cvf Genetic.tar.xz $(SOURCES) Makefile Doxyfile src/*.h
